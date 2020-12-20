@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Plugins } from '@capacitor/core';
+import {SettingsDialogService} from './settings-dialog/settings-dialog.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Corona-Timer';
+
+  constructor(public settingsDialogService: SettingsDialogService) {}
 }

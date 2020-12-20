@@ -1,0 +1,52 @@
+<h2 mat-dialog-title fxLayoutAlign="space-between center">
+  <span>{{title}}</span>
+  <mat-icon *ngIf="!disableClose" class="action-button" (click)="close()">close</mat-icon>
+</h2>
+<mat-dialog-content>
+  <p>{{message}}</p>
+</mat-dialog-content>
+<mat-dialog-actions fxLayoutAlign="end" fxLayoutGap="8px">
+  <div *ngFor="let button of buttons">
+    <ng-container [ngSwitch]="button.buttonStyle">
+      <button
+        *ngSwitchCase="'basic'"
+        mat-button
+        [color]="button.color"
+        (click)="close(button.value)">
+        <mat-icon *ngIf="button.icon">{{button.icon}}</mat-icon>
+        {{button.label}}
+      </button>
+      <button
+        *ngSwitchCase="'raised'"
+        mat-raised-button
+        [color]="button.color"
+        (click)="close(button.value)">
+        <mat-icon *ngIf="button.icon">{{button.icon}}</mat-icon>
+        {{button.label}}
+      </button>
+      <button
+        *ngSwitchCase="'stroked'"
+        [color]="button.color"
+        mat-stroked-button (click)="close(button.value)">
+        <mat-icon *ngIf="button.icon">{{button.icon}}</mat-icon>
+        {{button.label}}
+      </button>
+      <button
+        *ngSwitchCase="'flat'"
+        mat-flat-button
+        [color]="button.color"
+        (click)="close(button.value)">
+        <mat-icon *ngIf="button.icon">{{button.icon}}</mat-icon>
+        {{button.label}}
+      </button>
+      <button
+        *ngSwitchDefault
+        mat-button
+        [color]="button.color"
+        (click)="close(button.value)">
+        <mat-icon *ngIf="button.icon">{{button.icon}}</mat-icon>
+        {{button.label}}
+      </button>
+    </ng-container>
+  </div>
+</mat-dialog-actions>

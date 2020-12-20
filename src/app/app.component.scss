@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.container {
+  flex-grow: 1;
+  flex-shrink: 1;
+  position: relative;
+  background: inherit;
+  overflow-y: auto;
+}
+
+

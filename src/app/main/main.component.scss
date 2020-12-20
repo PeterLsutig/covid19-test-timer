@@ -1,0 +1,59 @@
+.grid-container {
+  margin: 20px;
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.add-card{
+  width: calc(100% - 30px);
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.mat-icon-big {
+  font-size: 50px;
+}
+
+.dashboard-card-content {
+
+}
+
+
+.blink-card-grey{
+  animation: blink-card-grey 1s linear infinite;
+}
+
+.blinking-card-yellow{
+  animation: blink-card-yellow 1s linear infinite;
+}
+
+.blink{
+  color: red;
+  animation: blink 0.5s linear infinite;
+}
+
+@keyframes blink-card-grey{
+  0%{background-color: lightgrey;}
+  50%{background-color: lightgrey;}
+}
+
+@keyframes blink-card-yellow{
+  0%{background-color: lightyellow;}
+  50%{background-color: lightyellow;}
+}
+
+@keyframes blink{
+  0%{opacity: .05;}
+  50%{opacity: .5;}
+  100%{opacity: 1;}
+}

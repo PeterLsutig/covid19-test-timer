@@ -1,0 +1,151 @@
+<h2 mat-dialog-title fxLayoutAlign="space-between center">
+  <span>Einstellungen</span>
+  <mat-icon class="action-button" (click)="close()">close</mat-icon>
+</h2>
+
+<br>
+
+<form [formGroup]="settingsFormGroup">
+
+  <mat-dialog-content>
+
+    <div *ngIf="windowService.device !== 'mobile'; else moblieView" class="content" fxLayout="column">
+
+      <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between">
+
+        <mat-form-field appearance="standard" fxFlex>
+          <mat-label>Phase 1 Minuten</mat-label>
+          <input matInput formControlName="phase1min" placeholder="Placeholder" type="number" min="0" step="1">
+          <span matSuffix>min</span>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" fxFlex>
+          <mat-label>Phase 1 Sekunden</mat-label>
+          <input matInput formControlName="phase1sec" placeholder="Placeholder" type="number" min="0" step="1">
+          <span matSuffix>sek</span>
+        </mat-form-field>
+
+      </div>
+
+
+      <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-between">
+
+        <mat-form-field appearance="standard" fxFlex>
+          <mat-label>Phase 2 Minuten</mat-label>
+          <input matInput formControlName="phase2min"type="number" min="0" step="1">
+          <span matSuffix>min</span>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" fxFlex>
+          <mat-label>Phase 2 Sekunden</mat-label>
+          <input matInput formControlName="phase2sec" type="number" min="0" max="59" step="1">
+          <span matSuffix>sek</span>
+        </mat-form-field>
+
+      </div>
+
+      <div fxLayout="column">
+        <mat-checkbox formControlName="deleteConfirmation">
+          Bestätigung beim Löschen eines Timers
+        </mat-checkbox>
+
+        <mat-checkbox formControlName="resetConfirmation">
+          Bestätigung beim Zurücksetzen eines Timers
+        </mat-checkbox>
+      </div>
+
+      <mat-form-field appearance="standard" fxFlex>
+        <mat-label>Counter</mat-label>
+        <input matInput [formControl]="counterFormControl" type="number" min="0" step="1">
+      </mat-form-field>
+
+    </div>
+
+    <ng-template #moblieView>
+
+      <div fxLayout="column" fxLayoutGap="8px" fxLayoutAlign="space-between">
+
+        <mat-form-field appearance="standard" fxFlex>
+          <mat-label>Phase 1 Minuten</mat-label>
+          <input matInput formControlName="phase1min" placeholder="Placeholder" type="number" min="0" step="1">
+          <span matSuffix>min</span>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" fxFlex>
+          <mat-label>Phase 1 Sekunden</mat-label>
+          <input matInput formControlName="phase1sec" placeholder="Placeholder" type="number" min="0" max="59" step="1">
+          <span matSuffix>sek</span>
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+
+        <mat-form-field appearance="standard" fxFlex>
+          <mat-label>Phase 2 Minuten</mat-label>
+          <input matInput formControlName="phase2min"type="number" min="0" step="1">
+          <span matSuffix>min</span>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" fxFlex>
+          <mat-label>Phase 2 Sekunden</mat-label>
+          <input matInput formControlName="phase2sec" type="number" min="0" max="59" step="1">
+          <span matSuffix>sek</span>
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+
+        <p>Bestätigung vor dem Durchführen der Aktion:</p>
+        <div fxLayout="column">
+          <mat-checkbox formControlName="deleteConfirmation">
+            Löschen
+          </mat-checkbox>
+
+          <mat-checkbox formControlName="resetConfirmation">
+            Zurücksetzen
+          </mat-checkbox>
+        </div>
+
+        <mat-form-field appearance="standard" fxFlex>
+          <mat-label>Counter</mat-label>
+          <input matInput [formControl]="counterFormControl" type="number" min="0" step="1">
+        </mat-form-field>
+
+      </div>
+    </ng-template>
+
+
+
+
+
+
+  </mat-dialog-content>
+
+
+  <ng-container *ngIf="windowService.device !== 'mobile'; else mobileViewActions">
+
+    <mat-dialog-actions align="end" fxLayoutGap="8px">
+      <button mat-stroked-button>
+        abbrechen
+      </button>
+
+      <button mat-flat-button color="primary" [disabled]="!settingsFormGroup.valid" (click)="saveChanges()">
+        übernehmen
+      </button>
+    </mat-dialog-actions>
+
+  </ng-container>
+
+  <ng-template #mobileViewActions>
+
+    <div fxLayoutGap="8px" fxLayout="column">
+      <button mat-stroked-button class="full-width">
+        abbrechen
+      </button>
+
+      <button mat-flat-button color="primary" [disabled]="!settingsFormGroup.valid || !counterFormControl.valid" class="full-width" (click)="saveChanges()">
+        übernehmen
+      </button>
+    </div>
+
+  </ng-template>
+
+</form>

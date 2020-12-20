@@ -1,0 +1,86 @@
+<div class="grid-container">
+
+  <mat-grid-list
+    [cols]="
+      windowService.device === 'mobile'
+        ? 1
+        : windowService.device === 'tablet'
+          ? 2
+          : 4"
+    rowHeight="262px"
+  >
+
+    <mat-grid-tile fxLayout="row">
+
+      <button mat-stroked-button class="dashboard-card add-card" (click)="addTest()">
+        Add
+      </button>
+
+
+
+    </mat-grid-tile>
+
+
+    <mat-grid-tile *ngFor="let ctest of covidTests; index as i">
+
+      <mat-card class="dashboard-card"
+                [ngClass]="ctest.state === 'Testlösung auftragen!'
+                  ? 'blinking-card-yellow'
+                  : ctest.state === 'Ergebnis ablesen!'
+                      ? 'blink-card-grey'
+                      : ''">
+
+        <mat-card-header>
+          <mat-card-title>{{ctest.name}}</mat-card-title>
+
+          <mat-card-subtitle *ngIf="ctest.state === 'Noch nicht gestartet'">00:00/{{ctest.duration1 | date: 'mm:ss'}}</mat-card-subtitle>
+          <mat-card-subtitle
+            *ngIf="ctest.state === 'Tupfer in Testlösung'
+            || ctest.state === 'Testlösung auftragen!'">{{(currentTime.value - ctest.phase1start + 999) | date: 'mm:ss'}}/{{ctest.duration1 | date: 'mm:ss'}}</mat-card-subtitle>
+          <mat-card-subtitle
+            *ngIf="ctest.state === 'Test läuft'
+            || ctest.state === 'Ergebnis ablesen!'">{{(currentTime.value - ctest.phase2start + 999) | date: 'mm:ss'}}/{{ctest.duration2 | date: 'mm:ss'}}</mat-card-subtitle>
+
+          <button mat-icon-button class="more-button" [disabled]="ctest.state == 'Noch nicht gestartet'" (click)="resetTimer(ctest)">
+            <mat-icon class="mat-icon">settings_backup_restore</mat-icon>
+          </button>
+
+
+        </mat-card-header>
+
+        <mat-divider></mat-divider>
+        <br>
+
+        <mat-card-content class="dashboard-card-content">
+          <mat-progress-bar *ngIf="ctest.state === 'Noch nicht gestartet'" mode="determinate" value="0"></mat-progress-bar>
+          <mat-progress-bar *ngIf="ctest.state === 'Tupfer in Testlösung'" mode="determinate" [value]="(currentTime.value - ctest.phase1start) / ctest.duration1 * 100"></mat-progress-bar>
+          <mat-progress-bar *ngIf="ctest.state === 'Testlösung auftragen!'" mode="determinate"  value="100"></mat-progress-bar>
+          <mat-progress-bar *ngIf="ctest.state === 'Test läuft'" mode="determinate" [value]="(currentTime.value - ctest.phase2start) / ctest.duration2 * 100"></mat-progress-bar>
+          <mat-progress-bar *ngIf="ctest.state === 'Ergebnis ablesen!'" mode="determinate"  value="100"></mat-progress-bar>
+        </mat-card-content>
+
+        <mat-divider></mat-divider>
+        <br>
+
+        <!--<h2 class="blink"><span>Ergebnis ablesen!</span></h2>-->
+        <h3>{{ctest.state}}</h3>
+
+        <mat-divider></mat-divider>
+
+        <mat-card-actions fxLayout="row" fxLayoutGap="4px">
+          <button mat-flat-button color="accent" (click)="deleteTimer(ctest)">entfernen</button>
+          <div fxFlex></div>
+          <button mat-flat-button color="primary" *ngIf="ctest.state === 'Noch nicht gestartet'" (click)="startPhase1(ctest)">Start</button>
+          <button mat-flat-button color="primary" *ngIf="ctest.state === 'Tupfer in Testlösung' || ctest.state === 'Testlösung auftragen!'" [disabled]="ctest.state !== 'Testlösung auftragen!'" (click)="startPhase2(ctest)">Weiter</button>
+        </mat-card-actions>
+
+      </mat-card>
+
+    </mat-grid-tile>
+
+
+
+  </mat-grid-list>
+
+
+</div>

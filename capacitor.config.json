@@ -1,0 +1,13 @@
+{
+  "appId": "eu.quante.nasuta",
+  "appName": "Corona-Timer",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist/Corona-Timer",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}
